@@ -1,0 +1,62 @@
+appId: com.wraithdev.wraithmc
+productName: WraithMC
+directories:
+  buildResources: build
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  # Loại bỏ bedrock data (277MB) - chỉ dùng Java Edition
+  - '!node_modules/minecraft-data/minecraft-data/data/bedrock/**/*'
+  # Loại bỏ docs, tests, tools không cần trong production
+  - '!node_modules/**/.github'
+  - '!node_modules/**/test'
+  - '!node_modules/**/tests'
+  - '!node_modules/**/__tests__'
+  - '!node_modules/**/doc'
+  - '!node_modules/**/docs'
+  - '!node_modules/**/tools'
+  - '!node_modules/**/schemas'
+  - '!node_modules/**/typings'
+  - '!node_modules/**/*.md'
+  - '!node_modules/**/*.ts'
+  - '!node_modules/**/LICENSE'
+  - '!node_modules/**/CHANGELOG'
+  - '!node_modules/**/.eslintrc*'
+  - '!node_modules/**/.prettierrc*'
+  - '!node_modules/**/tsconfig.json'
+asarUnpack:
+  - resources/**
+win:
+  target: portable
+  icon: src/renderer/assets/icons/icon.png
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+mac:
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    - NSCameraUsageDescription: Application requests access to the device's camera.
+    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
+    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
+    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+  notarize: false
+dmg:
+  artifactName: ${name}-${version}.${ext}
+linux:
+  target:
+    - AppImage
+    - snap
+    - deb
+  maintainer: electronjs.org
+  category: Utility
+appImage:
+  artifactName: ${name}-${version}.${ext}
+npmRebuild: false
+publish:
+  provider: generic
+  url:
